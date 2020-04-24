@@ -6,9 +6,7 @@ import eu.additude.demo.model.Persoon;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -58,6 +56,13 @@ public class PersoonEndpoint {
                 .map(persoon -> new PersoonDTO(persoon))  // zet een persoon om in een PersoonDTO
                 .collect(Collectors.toList()); // alles op de band weer verzamelen in een List.
         return dtoPersonen; // Manier 2 sturen we nu terug. bij manier 1 krijgen we door a & b een dubbele lijst
+    }
+
+    @PostMapping("personen")  // Post zorgt ervoor dat de mapping gelijk kan blijven. cool
+    @ResponseStatus(HttpStatus.CREATED)
+    public Persoon postPersoon(@RequestBody Persoon persoon) {  // Dit is de persoon die we in het bericht binnenkrijgen
+        System.out.println("LOG- REST: personen/add - Aanroep van onze restserivce voor het toevoegen van één persoon.");
+        return service.postPersoon(persoon); // Eigenlijk moeten we de persoon die binnekomst, qua gegevens overzetten in een nieuw persoon
     }
 
 

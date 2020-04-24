@@ -23,8 +23,13 @@ public class PersoonService {
         return repository.findAll();
     }
 
+    public Persoon postPersoon(Persoon persoon) {
+        return repository.save(persoon);
+    }
+
     // Nep db gemaakt
     private static Map<Long, Persoon> personen;
+
     static {
         personen = new HashMap<Long, Persoon>() {
             {
@@ -34,6 +39,7 @@ public class PersoonService {
             }
         };
     }
+
     public Persoon findPersoonByIdIntern(Long id) {
         return personen.get(id);
     }
