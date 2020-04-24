@@ -1,6 +1,7 @@
 package eu.additude.demo.controller;
 
 import eu.additude.demo.model.Persoon;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -9,6 +10,19 @@ import java.util.*;
 @Service        // org.springframework
 @Transactional  // org.springframework
 public class PersoonService {
+
+    @Autowired
+    private PersoonRepository repository;
+
+    public Optional<Persoon> findPersoonById(Long id) {
+        Optional<Persoon> persoonOptional = repository.findById(id);
+        return persoonOptional;
+    }
+
+    public List<Persoon> getAllePersonen() {
+        return repository.findAll();
+    }
+
     // Nep db gemaakt
     private static Map<Long, Persoon> personen;
     static {
@@ -20,11 +34,11 @@ public class PersoonService {
             }
         };
     }
-    public Persoon findPersoonById(Long id) {
+    public Persoon findPersoonByIdIntern(Long id) {
         return personen.get(id);
     }
 
-    public List<Persoon> getAllePersonen() {
+    public List<Persoon> getAllePersonenIntern() {
 //        Set<Long> longs = personen.keySet(); // alle keys eruit halen
 //        Collection<Persoon> values = personen.values(); // alle elementen die bij de keys horen eruit halen
 //        List<Persoon>persoonLijst = new ArrayList<>(values); // van die collections een ArrayList maken

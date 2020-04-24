@@ -13,6 +13,8 @@ public class Persoon {
     private String achternaam;
     private String telefoonnummer;
 
+    private Persoon() {} // Zonder deze (private???) constructor gaat het mis. Spring/CrudRepository trekt zich dus NIETS van private aan...
+
     public Persoon(Long id, String bsn, String voornaam, String tussenvoegsel, String achternaam, String telefoonnummer) {
         setId(id);
         setBsn(bsn);
