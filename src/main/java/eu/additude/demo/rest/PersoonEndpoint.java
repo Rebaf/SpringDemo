@@ -29,6 +29,8 @@ public class PersoonEndpoint {
         if (persoon != null) {
             return new ResponseEntity<>(new PersoonDTO(persoon), HttpStatus.OK);
         } else {
+            // Als er geen persoon gevonden is, willen we geen OK(200) teruggeven, maar iets anders.
+            // Dat is de reden dat deze methode een ResponseEntity teruggeeft en niet alleen de inhoud/body/PersoonDTO
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
     }
