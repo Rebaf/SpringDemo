@@ -27,4 +27,8 @@ public class PersoonService {
     public Persoon postPersoon(Persoon persoon) {
         return repository.save(persoon);
     }
+
+//    public Persoon putPersoon(Long id, Persoon persoon) {
+//        Optional<Persoon> persoonById = findPersoonById(id);
+//    }
 }

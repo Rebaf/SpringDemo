@@ -1,27 +1,39 @@
 package eu.additude.demo.model;
 
-import javax.persistence.Entity;
-import javax.persistence.Id;
+import javax.persistence.*;
 
 @Entity // javax.persistence
+//@SequenceGenerator(name="seq", initialValue=10)
 public class Persoon {
     @Id // javax.persistence
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id; // Moet een object zijn vanwege CrudRepository
+    @Column(unique = true) // heeft altijd betrekking op het/de eerstvolgende field/instantie variabele
     private String bsn;
-    private String voornaam;
+    @Column(name = "voornaam") // Zonder deze oplossing, zouden we in het insert statement als veld voor_naam moeten gebruiken. // Hoofdletters worden omgezet naar _letter
+    private String voorNaam; // Zonder de mapping van de @Column zou dit veld in de db voor_naam zijn.
     private String tussenvoegsel;
+//    @Column(name = "hoeheetjenouookalweer") // Wel de data.sql of import.sql hierop aanpassen.
     private String achternaam;
     private String telefoonnummer;
 
     private Persoon() {} // Zonder deze (private???) constructor gaat het mis. Spring/CrudRepository trekt zich dus NIETS van private aan...
 
-    public Persoon(Long id, String bsn, String voornaam, String tussenvoegsel, String achternaam, String telefoonnummer) {
+    public Persoon(Long id, String bsn, String voorNaam, String tussenvoegsel, String achternaam, String telefoonnummer) {
         setId(id);
         setBsn(bsn);
-        setVoornaam(voornaam);
+        setVoorNaam(voorNaam);
         setTussenvoegsel(tussenvoegsel);
         setAchternaam(achternaam);
         setTelefoonnummer(telefoonnummer);
+    }
+
+    public Persoon(Persoon other) {
+        setBsn(other.getBsn()); // bsn check (en andere validatie methodes v/d gegevens)
+        setVoorNaam(other.getVoorNaam());
+        setTussenvoegsel(other.getTussenvoegsel());
+        setAchternaam(other.getAchternaam());
+        setTelefoonnummer(other.getTelefoonnummer()); // verkeerd telefoonnummer etc
     }
 
     public Long getId() {
@@ -40,12 +52,12 @@ public class Persoon {
         this.bsn = bsn;
     }
 
-    public String getVoornaam() {
-        return voornaam;
+    public String getVoorNaam() {
+        return voorNaam;
     }
 
-    public void setVoornaam(String voornaam) {
-        this.voornaam = voornaam;
+    public void setVoorNaam(String voorNaam) {
+        this.voorNaam = voorNaam;
     }
 
     public String getTussenvoegsel() {

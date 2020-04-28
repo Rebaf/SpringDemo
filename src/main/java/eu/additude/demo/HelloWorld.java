@@ -20,5 +20,4 @@ public class HelloWorld {
     public String landing(){
         return "<html><head><title>Hello</title><head><body><b>Hello,</b><br>prutsers united</body></html>";
     }
-
 }

@@ -19,7 +19,7 @@ public class PersoonEndpoint {
 
     @GetMapping("personen/{id}")
     public ResponseEntity<PersoonDTO> getPersoonById(@PathVariable Long id) {
-        System.out.println("LOG- REST: personen/" + id + " - Aanroep van onze restserivce voor het opvragen van één persoon.");
+        System.out.println("LOG- GET: personen/" + id + " - Aanroep van onze restserivce voor het opvragen van één persoon.");
         Optional<Persoon> persoonOptional = service.findPersoonById(id);
 
         return persoonOptional // Dit is voor over een aantal weken.
@@ -50,7 +50,7 @@ public class PersoonEndpoint {
 
     @GetMapping("personen")
     public List<PersoonDTO> getAllePersonen() {
-        System.out.println("LOG- REST: personen - Aanroep van onze restserivce voor het opvragen van één persoon.");
+        System.out.println("LOG- GET: personen - Aanroep van onze restserivce voor het opvragen van één persoon.");
 
 //        return service.getAllePersonen()
 //                .stream()
@@ -68,10 +68,23 @@ public class PersoonEndpoint {
     @PostMapping("personen")  // Post zorgt ervoor dat de mapping gelijk kan blijven, geen conflict met de GET voor alle personen. COOL.
     @ResponseStatus(HttpStatus.CREATED)
     public Persoon postPersoon(@RequestBody Persoon persoon) {      // Dit is de persoon die we in het bericht binnenkrijgen
-        System.out.println("LOG- REST: personen/add - Aanroep van onze restserivce voor het toevoegen van één persoon.");
+        System.out.println("LOG- POST: personen - Aanroep van onze restserivce voor het toevoegen van één persoon.");
 
         // Eigenlijk moeten we de persoon die binnenkomt, qua gegevens overzetten in een nieuw persoon
         // Vertrouw nooit de info die je vanuit de client kant binnenkrijgt!!
-        return service.postPersoon(persoon);
+        Persoon nieuwPersoon = new Persoon(persoon);
+        return service.postPersoon(nieuwPersoon);
     }
+
+//    @PutMapping("personen/{id}")
+//    @ResponseStatus(HttpStatus.ACCEPTED)
+//    public Persoon changePersoon(@PathVariable Long id, @RequestBody Persoon persoon) {      // Dit is de persoon die we in het bericht binnenkrijgen
+//        System.out.println("LOG- PUT: personen - Aanroep van onze restserivce voor het toevoegen van één persoon.");
+//
+//        return service.putPersoon(id, persoon);
+//        // Eigenlijk moeten we de persoon die binnenkomt, qua gegevens overzetten in een nieuw persoon
+//        // Vertrouw nooit de info die je vanuit de client kant binnenkrijgt!!
+////        Persoon nieuwPersoon = new Persoon(persoon);
+////        return service.postPersoon(nieuwPersoon);
+//    }
 }
