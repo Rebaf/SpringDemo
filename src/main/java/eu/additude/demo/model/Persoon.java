@@ -1,5 +1,7 @@
 package eu.additude.demo.model;
 
+import eu.additude.demo.model.validations.Age;
+
 import javax.persistence.*;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
@@ -8,6 +10,7 @@ import javax.validation.constraints.Pattern;
 @Entity // javax.persistence
 //@SequenceGenerator(name="seq", initialValue=10)
 public class Persoon {
+
     @Id // javax.persistence
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id; // Moet een object zijn vanwege CrudRepository
@@ -26,6 +29,17 @@ public class Persoon {
     private String achternaam;
 
     private String telefoonnummer;
+
+    @Age(message = "De leeftijd moet tussen {min} en {max} liggen", min = 18, max = 35)
+    private Integer leeftijd;
+
+    public Integer getLeeftijd() {
+        return leeftijd;
+    }
+
+    public void setLeeftijd(Integer leeftijd) {
+        this.leeftijd = leeftijd;
+    }
 
     public Long getId() {
         return id;
