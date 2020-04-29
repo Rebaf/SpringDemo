@@ -1,43 +1,45 @@
 package eu.additude.demo.model;
 
+import eu.additude.demo.model.validations.Age;
+
 import javax.persistence.*;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Pattern;
 
 @Entity // javax.persistence
 //@SequenceGenerator(name="seq", initialValue=10)
 public class Persoon {
+
     @Id // javax.persistence
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id; // Moet een object zijn vanwege CrudRepository
+
     @Column(unique = true) // heeft altijd betrekking op het/de eerstvolgende field/instantie variabele
+    // 9.999.999
+    @Pattern(regexp = "^[0-9].[0-9][0-9][0-9].[0-9][0-9][0-9]$", message = "BSN is niet juiste formaat")
     private String bsn;
+
     @Column(name = "voornaam") // Zonder deze oplossing, zouden we in het insert statement als veld voor_naam moeten gebruiken. // Hoofdletters worden omgezet naar _letter
-    private String voorNaam; // Zonder de mapping van de @Column zou dit veld in de db voor_naam zijn. // Let op dat je voorNaam gebruikt in je JSON!!
+    private String voornaam; // In geval van voorNaam zorgt de mapping van de @Column zou dit veld in de db voor_naam zijn.
+
     @NotNull
     private String tussenvoegsel;
-//    @Column(name = "hoeheetjenouookalweer") // Wel de data.sql of import.sql hierop aanpassen.
-    @NotEmpty
+
+    @NotEmpty(message = "Achternaam is verplicht")
     private String achternaam;
+
     private String telefoonnummer;
 
-    private Persoon() {} // Zonder deze (private???) constructor gaat het mis. Spring/CrudRepository trekt zich dus NIETS van private aan...
+    @Age(message = "De leeftijd moet tussen {min} en {max} liggen", min = 18, max = 35)
+    private Integer leeftijd;
 
-    public Persoon(Long id, String bsn, String voorNaam, String tussenvoegsel, String achternaam, String telefoonnummer) {
-        setId(id);
-        setBsn(bsn);
-        setVoorNaam(voorNaam);
-        setTussenvoegsel(tussenvoegsel);
-        setAchternaam(achternaam);
-        setTelefoonnummer(telefoonnummer);
+    public Integer getLeeftijd() {
+        return leeftijd;
     }
 
-    public Persoon(Persoon other) {
-        setBsn(other.getBsn()); // bsn check (en andere validatie methodes v/d gegevens)
-        setVoorNaam(other.getVoorNaam());
-        setTussenvoegsel(other.getTussenvoegsel());
-        setAchternaam(other.getAchternaam());
-        setTelefoonnummer(other.getTelefoonnummer()); // verkeerd telefoonnummer etc
+    public void setLeeftijd(Integer leeftijd) {
+        this.leeftijd = leeftijd;
     }
 
     public Long getId() {
@@ -56,12 +58,12 @@ public class Persoon {
         this.bsn = bsn;
     }
 
-    public String getVoorNaam() {
-        return voorNaam;
+    public String getVoornaam() {
+        return voornaam;
     }
 
-    public void setVoorNaam(String voorNaam) {
-        this.voorNaam = voorNaam;
+    public void setVoornaam(String voornaam) {
+        this.voornaam = voornaam;
     }
 
     public String getTussenvoegsel() {
