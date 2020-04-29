@@ -12,7 +12,7 @@ public class PersoonDTO {  //DTO Data Transfer Object
     }
 
     private String maakSamenGesteldeNaam(Persoon persoon) {
-        return (persoon.getVoorNaam() + " " + persoon.getTussenvoegsel()).trim() + " " + persoon.getAchternaam();
+        return (persoon.getVoornaam() + " " + persoon.getTussenvoegsel()).trim() + " " + persoon.getAchternaam();
     }
 
     public String getNaam() {
