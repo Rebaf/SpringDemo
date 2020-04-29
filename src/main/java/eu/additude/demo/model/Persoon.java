@@ -1,13 +1,10 @@
 package eu.additude.demo.model;
 
-import lombok.Data;
-
 import javax.persistence.*;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
 
-@Data
 @Entity // javax.persistence
 //@SequenceGenerator(name="seq", initialValue=10)
 public class Persoon {
@@ -30,7 +27,51 @@ public class Persoon {
 
     private String telefoonnummer;
 
-    //    @Age(message = "Leeftijd moet tussen 20 en 61 liggen", min = 20, max = 61)
-    private Integer leeftijd;
+    public Long getId() {
+        return id;
+    }
 
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public String getBsn() {
+        return bsn;
+    }
+
+    public void setBsn(String bsn) {
+        this.bsn = bsn;
+    }
+
+    public String getVoornaam() {
+        return voornaam;
+    }
+
+    public void setVoornaam(String voornaam) {
+        this.voornaam = voornaam;
+    }
+
+    public String getTussenvoegsel() {
+        return tussenvoegsel;
+    }
+
+    public void setTussenvoegsel(String tussenvoegsel) {
+        this.tussenvoegsel = tussenvoegsel;
+    }
+
+    public String getAchternaam() {
+        return achternaam;
+    }
+
+    public void setAchternaam(String achternaam) {
+        this.achternaam = achternaam;
+    }
+
+    public String getTelefoonnummer() {
+        return telefoonnummer;
+    }
+
+    public void setTelefoonnummer(String telefoonnummer) {
+        this.telefoonnummer = telefoonnummer;
+    }
 }
