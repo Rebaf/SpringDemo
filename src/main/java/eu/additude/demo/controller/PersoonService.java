@@ -3,7 +3,6 @@ package eu.additude.demo.controller;
 import eu.additude.demo.dto.PersoonDTO;
 import eu.additude.demo.exceptions.ResourceNotFoundException;
 import eu.additude.demo.model.Persoon;
-import eu.additude.demo.repository.PersoonRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;

@@ -1,6 +1,8 @@
 package eu.additude.demo.model;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
 
 @Entity // javax.persistence
 //@SequenceGenerator(name="seq", initialValue=10)
@@ -11,9 +13,11 @@ public class Persoon {
     @Column(unique = true) // heeft altijd betrekking op het/de eerstvolgende field/instantie variabele
     private String bsn;
     @Column(name = "voornaam") // Zonder deze oplossing, zouden we in het insert statement als veld voor_naam moeten gebruiken. // Hoofdletters worden omgezet naar _letter
-    private String voorNaam; // Zonder de mapping van de @Column zou dit veld in de db voor_naam zijn.
+    private String voorNaam; // Zonder de mapping van de @Column zou dit veld in de db voor_naam zijn. // Let op dat je voorNaam gebruikt in je JSON!!
+    @NotNull
     private String tussenvoegsel;
 //    @Column(name = "hoeheetjenouookalweer") // Wel de data.sql of import.sql hierop aanpassen.
+    @NotEmpty
     private String achternaam;
     private String telefoonnummer;
 
