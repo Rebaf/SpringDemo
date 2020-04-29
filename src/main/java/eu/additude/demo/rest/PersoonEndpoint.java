@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -42,10 +43,15 @@ public class PersoonEndpoint {
     @PostMapping()
     // Post zorgt ervoor dat de mapping gelijk kan blijven, geen conflict met de GET voor alle personen. COOL.
     @ResponseStatus(HttpStatus.CREATED)
-    public Persoon postPersoon(@RequestBody Persoon persoon) {      // Dit is de persoon die we in het bericht binnenkrijgen
+    public Persoon postPersoon(@RequestBody @Valid Persoon persoon) {      // Dit is de persoon die we in het bericht binnenkrijgen
         System.out.println("LOG- POST: personen - Aanroep van onze restserivce voor het toevoegen van één persoon.");
         // Eigenlijk moeten we de persoon die binnenkomt, qua gegevens overzetten in een nieuw persoon
         // Vertrouw nooit de info die je vanuit de client kant binnenkrijgt!!
+
+//        if (persoon.getAchternaam() == null || persoon.getAchternaam().isEmpty()) {
+//            throw new BadRequestException("De achternaam moet ingevuld zijn.");
+//        }
+
         //Persoon nieuwPersoon = new Persoon(persoon);
         return service.postPersoon(persoon);
     }
