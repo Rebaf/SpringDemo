@@ -1,5 +1,8 @@
 package eu.additude.demo.model;
 
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import eu.additude.demo.model.validations.Age;
 
 import javax.persistence.*;
@@ -8,7 +11,9 @@ import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
 
 @Entity // javax.persistence
-//@SequenceGenerator(name="seq", initialValue=10)
+@JsonIdentityInfo(
+        generator = ObjectIdGenerators.PropertyGenerator.class,
+        property = "id")
 public class Persoon {
 
     @Id // javax.persistence
@@ -20,7 +25,8 @@ public class Persoon {
     @Pattern(regexp = "^[0-9].[0-9][0-9][0-9].[0-9][0-9][0-9]$", message = "BSN is niet juiste formaat")
     private String bsn;
 
-    @Column(name = "voornaam") // Zonder deze oplossing, zouden we in het insert statement als veld voor_naam moeten gebruiken. // Hoofdletters worden omgezet naar _letter
+    @Column(name = "voornaam")
+    // Zonder deze oplossing, zouden we in het insert statement als veld voor_naam moeten gebruiken. // Hoofdletters worden omgezet naar _letter
     private String voornaam; // In geval van voorNaam zorgt de mapping van de @Column zou dit veld in de db voor_naam zijn.
 
     @NotNull
@@ -31,10 +37,15 @@ public class Persoon {
 
     private String telefoonnummer;
 
+    @ManyToOne
+//    @JsonIgnore
+    private Afdeling afdeling;
+
     @Age(message = "De leeftijd moet tussen {min} en {max} liggen", min = 18, max = 35)
     private Integer leeftijd;
 
-    private Persoon() {} // Zonder deze (private???) constructor gaat het mis. Spring/CrudRepository trekt zich dus NIETS van private aan...
+    private Persoon() {
+    } // Zonder deze (private???) constructor gaat het mis. Spring/CrudRepository trekt zich dus NIETS van private aan...
 
     public Persoon(Long id, String bsn, String voorNaam, String tussenvoegsel, String achternaam, String telefoonnummer) {
         setId(id);
@@ -107,5 +118,13 @@ public class Persoon {
 
     public void setTelefoonnummer(String telefoonnummer) {
         this.telefoonnummer = telefoonnummer;
+    }
+
+    public Afdeling getAfdeling() {
+        return afdeling;
+    }
+
+    public void setAfdeling(Afdeling afdeling) {
+        this.afdeling = afdeling;
     }
 }

@@ -17,7 +17,15 @@ public class PersoonService {
     @Autowired
     private PersoonRepository repository;
 
-    public PersoonDTO findPersoonById(Long id) {
+    public Persoon findPersoonById(Long id) {
+        Optional<Persoon> persoonOptional = repository.findById(id);
+        if (!persoonOptional.isPresent()) {
+            throw new ResourceNotFoundException("Persoon met id " + id + " niet gevonden");
+        }
+        return persoonOptional.get();
+    }
+
+    public PersoonDTO findPersoonDTOById(Long id) {
         Optional<Persoon> persoonOptional = repository.findById(id);
         if (!persoonOptional.isPresent()) {
             throw new ResourceNotFoundException("Persoon met id " + id + " niet gevonden");

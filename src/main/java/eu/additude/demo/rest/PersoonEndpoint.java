@@ -3,6 +3,8 @@ package eu.additude.demo.rest;
 import eu.additude.demo.controller.PersoonService;
 import eu.additude.demo.dto.PersoonDTO;
 import eu.additude.demo.model.Persoon;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
@@ -13,19 +15,29 @@ import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/personen")
+//@Slf4j // Via Lombok kun je ook op deze manier een logger krijgen, zonder de instantie
 public class PersoonEndpoint {
+    private Logger log = LoggerFactory.getLogger(PersoonEndpoint.class);
     @Autowired
     PersoonService service;
 
     @GetMapping("/{id}")
-    public PersoonDTO getPersoonById(@PathVariable Long id) {
+    public Persoon getPersoonById(@PathVariable Long id) {
         System.out.println("LOG- GET: personen/" + id + " - Aanroep van onze restserivce voor het opvragen van één persoon.");
+        log.info("LOG- GET: personen/{} - Aanroep van onze restserivce voor het opvragen van één persoon.", id);
         return service.findPersoonById(id);
+    }
+
+    @GetMapping("/DTO/{id}")
+    public PersoonDTO getPersoonDTOById(@PathVariable Long id) {
+        System.out.println("LOG- GET: personen/DTO/" + id + " - Aanroep van onze restserivce voor het opvragen van één persoon.");
+        log.info("LOG- GET: personen/DTO/{} - Aanroep van onze restserivce voor het opvragen van één persoon.", id);
+        return service.findPersoonDTOById(id);
     }
 
     @GetMapping()
     public List<PersoonDTO> getAllePersonen() {
-        System.out.println("LOG- GET: personen - Aanroep van onze restserivce voor het opvragen van één persoon.");
+        System.out.println("LOG- GET: personen - Aanroep van onze restserivce voor het opvragen van alle personen.");
 
 //        return service.getAllePersonen()
 //                .stream()
