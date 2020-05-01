@@ -2,6 +2,7 @@ package eu.additude.demo.model;
 
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import eu.additude.demo.model.validations.Age;
 
@@ -38,8 +39,17 @@ public class Persoon {
     private String telefoonnummer;
 
     @ManyToOne
-//    @JsonIgnore
+    @JsonIgnore // wel in database opslaan, niet in JSON
     private Afdeling afdeling;
+
+    @Transient // niet in database opslaan, wel in JSON
+    @JsonProperty("afdeling") // naam van het originele veld => naam in JSON
+    private Long afdelingId;
+
+//    @Column(name = "afdeling_id") // naam van het veld in de database
+//    private Long afdeling; // naam van het veld in Java/JSON
+//    // of zo, dan is de @Column niet nodig
+//    private Long afdelingId; // met afdelingId(in Java en JSON) wordt deze gekoppeld aan het veld afdeling_id in de db
 
     @Age(message = "De leeftijd moet tussen {min} en {max} liggen", min = 18, max = 35)
     private Integer leeftijd;
@@ -126,5 +136,13 @@ public class Persoon {
 
     public void setAfdeling(Afdeling afdeling) {
         this.afdeling = afdeling;
+    }
+
+    public Long getAfdelingId() {
+        return afdelingId;
+    }
+
+    public void setAfdelingId(Long afdelingId) {
+        this.afdelingId = afdelingId;
     }
 }

@@ -14,11 +14,11 @@ import java.util.stream.Collectors;
 @Service
 @Transactional
 public class AfdelingService {
-    
+
     @Autowired
     private AfdelingRepository repository;
 
-    public AfdelingDTO findAfdelingById(Long id) {
+    public AfdelingDTO findAfdelingDTOById(Long id) {
 //        Optional<Afdeling> afdelingOptional = repository.findById(id);
 //        if (!afdelingOptional.isPresent()) {
 //            throw new ResourceNotFoundException("Afdeling met id " + id + " niet gevonden");
@@ -29,6 +29,11 @@ public class AfdelingService {
         return repository.findById(id)
                 .map(AfdelingDTO::new)
 //                .map(afdeling -> new AfdelingDTO(afdeling))
+                .orElseThrow(() -> new ResourceNotFoundException("Afdeling met id " + id + " niet gevonden"));
+    }
+
+    public Afdeling findAfdelingById(Long id) {
+        return repository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("Afdeling met id " + id + " niet gevonden"));
     }
 

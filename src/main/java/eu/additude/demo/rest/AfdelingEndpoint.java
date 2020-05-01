@@ -22,7 +22,7 @@ public class AfdelingEndpoint {
     public AfdelingDTO getPersoonById(@PathVariable Long id) {
         System.out.println("LOG- GET: afdelingen/" + id + " - Aanroep van onze restserivce voor het opvragen van één afdeling.");
         log.info("LOG- GET: afdelingen/{} - Aanroep van onze restserivce voor het opvragen van één afdeling.", id);
-        return service.findAfdelingById(id);
+        return service.findAfdelingDTOById(id);
     }
 
     @GetMapping()
