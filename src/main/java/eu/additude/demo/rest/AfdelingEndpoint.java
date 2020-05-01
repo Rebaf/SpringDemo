@@ -1,6 +1,7 @@
 package eu.additude.demo.rest;
 
 import eu.additude.demo.controller.AfdelingService;
+import eu.additude.demo.dto.AfdelingDTO;
 import eu.additude.demo.model.Afdeling;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,14 +19,14 @@ public class AfdelingEndpoint {
     AfdelingService service;
 
     @GetMapping("/{id}")
-    public Afdeling getPersoonById(@PathVariable Long id) {
+    public AfdelingDTO getPersoonById(@PathVariable Long id) {
         System.out.println("LOG- GET: afdelingen/" + id + " - Aanroep van onze restserivce voor het opvragen van één afdeling.");
         log.info("LOG- GET: afdelingen/{} - Aanroep van onze restserivce voor het opvragen van één afdeling.", id);
         return service.findAfdelingById(id);
     }
 
     @GetMapping()
-    public List<Afdeling> getAlleAfdelingen() {
+    public List<AfdelingDTO> getAlleAfdelingen() {
         System.out.println("LOG- GET: afdelingen - Aanroep van onze restserivce voor het opvragen van alle afdelingen.");
         return service.getAlleAfdelingen();
     }

@@ -11,9 +11,9 @@ import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
 
 @Entity // javax.persistence
-@JsonIdentityInfo(
-        generator = ObjectIdGenerators.PropertyGenerator.class,
-        property = "id")
+//@JsonIdentityInfo(
+//        generator = ObjectIdGenerators.PropertyGenerator.class,
+//        property = "id")
 public class Persoon {
 
     @Id // javax.persistence
@@ -44,7 +44,7 @@ public class Persoon {
     @Age(message = "De leeftijd moet tussen {min} en {max} liggen", min = 18, max = 35)
     private Integer leeftijd;
 
-    private Persoon() {
+    public Persoon() {
     } // Zonder deze (private???) constructor gaat het mis. Spring/CrudRepository trekt zich dus NIETS van private aan...
 
     public Persoon(Long id, String bsn, String voorNaam, String tussenvoegsel, String achternaam, String telefoonnummer) {

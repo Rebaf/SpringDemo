@@ -18,7 +18,7 @@ public class PersoonUtils {
             persoon.setId(id);
         }
         persoon.setAchternaam("naam-" + id);
-        persoon.setAfdeling(1);
+//        persoon.setAfdeling(1);
         persoon.setLeeftijd(18 + new Random().nextInt(17));
         persoon.setBsn("1.234.567");
         persoon.setVoornaam("voornaam-" + id);
