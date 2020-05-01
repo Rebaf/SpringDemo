@@ -52,6 +52,20 @@ public class PersoonEndpoint {
         return dtoPersonen;                                 // Manier 2 sturen we nu terug. bij manier 1 krijgen we door a & b nu natuurlijk alle personen dubbel
     }
 
+    @GetMapping("/afdeling/{id}")
+    public List<PersoonDTO> getAllePersonenVanAfdeling(@PathVariable Long id) {
+        log.info("LOG- GET: personen/afdeling/{} - Aanroep van onze restserivce voor het opvragen van alle personen van een specifieke afdeling.", id);
+
+        return service.getAllePersonenDTOVanAfdeling(id);
+        // of
+//        return service.getAllePersonen()
+//                .stream()
+//                .filter(persoon -> persoon.getAfdeling() != null)
+//                .filter(persoon -> persoon.getAfdeling().getId().equals(id))
+//                .map(PersoonDTO::new)
+//                .collect(Collectors.toList());
+    }
+
     @PostMapping()
     // Post zorgt ervoor dat de mapping gelijk kan blijven, geen conflict met de GET voor alle personen. COOL.
     @ResponseStatus(HttpStatus.CREATED)
@@ -68,15 +82,18 @@ public class PersoonEndpoint {
         return service.postPersoon(persoon);
     }
 
-//    @PutMapping("personen/{id}")
-//    @ResponseStatus(HttpStatus.ACCEPTED)
-//    public Persoon changePersoon(@PathVariable Long id, @RequestBody Persoon persoon) {      // Dit is de persoon die we in het bericht binnenkrijgen
-//        System.out.println("LOG- PUT: personen - Aanroep van onze restserivce voor het toevoegen van één persoon.");
-//
-//        return service.putPersoon(id, persoon);
-//        // Eigenlijk moeten we de persoon die binnenkomt, qua gegevens overzetten in een nieuw persoon
-//        // Vertrouw nooit de info die je vanuit de client kant binnenkrijgt!!
-////        Persoon nieuwPersoon = new Persoon(persoon);
-////        return service.postPersoon(nieuwPersoon);
-//    }
+    @PutMapping("/{id}")
+    @ResponseStatus(HttpStatus.ACCEPTED)
+    public Persoon changePersoon(@PathVariable Long id, @RequestBody Persoon persoon) {      // Dit is de persoon die we in het bericht binnenkrijgen
+        System.out.println("LOG- PUT: personen - Aanroep van onze restserivce voor het wijzigen van één persoon.");
+        return service.putPersoon(id, persoon);
+    }
+
+    @DeleteMapping("/{id}")
+    @ResponseStatus(HttpStatus.ACCEPTED)
+    public void deletePersoon(@PathVariable Long id) {
+        System.out.println("LOG- DELETE/" + id + ": personen - Aanroep van onze restserivce voor het verwijderen van één persoon.");
+        log.info("LOG- DELETE/{}: personen - Aanroep van onze restserivce voor het verwijderen van één persoon.", id);
+        service.deletePersoon(id);
+    }
 }

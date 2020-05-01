@@ -57,21 +57,18 @@ public class Persoon {
     public Persoon() {
     } // Zonder deze (private???) constructor gaat het mis. Spring/CrudRepository trekt zich dus NIETS van private aan...
 
-    public Persoon(Long id, String bsn, String voorNaam, String tussenvoegsel, String achternaam, String telefoonnummer) {
-        setId(id);
-        setBsn(bsn);
-        setVoornaam(voorNaam);
-        setTussenvoegsel(tussenvoegsel);
-        setAchternaam(achternaam);
-        setTelefoonnummer(telefoonnummer);
+    public Persoon(Persoon other) {
+        zetGegevensOver(other);
     }
 
-    public Persoon(Persoon other) {
-        setBsn(other.getBsn()); // bsn check (en andere validatie methodes v/d gegevens)
-        setVoornaam(other.getVoornaam());
-        setTussenvoegsel(other.getTussenvoegsel());
-        setAchternaam(other.getAchternaam());
-        setTelefoonnummer(other.getTelefoonnummer()); // verkeerd telefoonnummer etc
+    public void zetGegevensOver(Persoon other) {
+        setBsn(other.bsn); // bsn check (en andere validatie methodes v/d gegevens)
+        setVoornaam(other.voornaam);
+        setTussenvoegsel(other.tussenvoegsel);
+        setAchternaam(other.achternaam);
+        setTelefoonnummer(other.telefoonnummer); // verkeerd telefoonnummer etc
+        setLeeftijd(other.leeftijd);
+        setAfdeling(other.afdeling);
     }
 
     public Integer getLeeftijd() {

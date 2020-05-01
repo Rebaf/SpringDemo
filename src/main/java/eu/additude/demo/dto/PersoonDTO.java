@@ -1,6 +1,5 @@
 package eu.additude.demo.dto;
 
-import eu.additude.demo.model.Afdeling;
 import eu.additude.demo.model.Persoon;
 
 public class PersoonDTO {  //DTO Data Transfer Object
@@ -14,8 +13,10 @@ public class PersoonDTO {  //DTO Data Transfer Object
         setId(persoon.getId());
         setNaam(maakSamenGesteldeNaam(persoon));
         setTelefoonnummer(persoon.getTelefoonnummer());
-        setAfdeling(persoon.getAfdeling().getId());
-        setAfdelingNaam(persoon.getAfdeling().getNaam());
+        if (persoon.getAfdeling() != null) {
+            setAfdeling(persoon.getAfdeling().getId());
+            setAfdelingNaam(persoon.getAfdeling().getNaam());
+        }
     }
 
     private String maakSamenGesteldeNaam(Persoon persoon) {

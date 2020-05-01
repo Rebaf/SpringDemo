@@ -1,6 +1,7 @@
 package eu.additude.demo.controller;
 
 import eu.additude.demo.dto.AfdelingDTO;
+import eu.additude.demo.exceptions.ConflictException;
 import eu.additude.demo.exceptions.ResourceNotFoundException;
 import eu.additude.demo.model.Afdeling;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -44,7 +45,21 @@ public class AfdelingService {
                 .collect(Collectors.toList());
     }
 
-    public Afdeling postAfdeling(Afdeling Afdeling) {
-        return repository.save(Afdeling);
+    public Afdeling postAfdeling(Afdeling afdeling) {
+        return repository.save(afdeling);
+    }
+
+    public Afdeling putAfdeling(Long id, Afdeling afdeling) {
+        if (!id.equals(afdeling.getId())) {
+            throw new ConflictException("Id " + id + " komt niet overeen met de gevonden id van afdeling.");
+        }
+        Afdeling target = findAfdelingById(id);
+        target.setNaam(afdeling.getNaam());
+        return repository.save(target);
+    }
+
+    public void deleteAfdeling(Long id) {
+        Afdeling afdeling = findAfdelingById(id);
+        repository.delete(afdeling);
     }
 }

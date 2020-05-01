@@ -39,4 +39,18 @@ public class AfdelingEndpoint {
 
         return service.postAfdeling(afdeling);
     }
+    @PutMapping("/{id}")
+    @ResponseStatus(HttpStatus.ACCEPTED)
+    public Afdeling changeAfdeling(@PathVariable Long id, @RequestBody Afdeling afdeling) {
+        System.out.println("LOG- PUT: afdelingen - Aanroep van onze restserivce voor het wijzigen van één afdeling.");
+        return service.putAfdeling(id, afdeling);
+    }
+
+    @DeleteMapping("/{id}")
+    @ResponseStatus(HttpStatus.ACCEPTED)
+    public void deleteAfdeling(@PathVariable Long id) {
+        System.out.println("LOG- DELETE/" + id + ": afdelingen - Aanroep van onze restserivce voor het verwijderen van één afdelinge.");
+        log.info("LOG- DELETE/{}: afdelingen - Aanroep van onze restserivce voor het verwijderen van één afdeling.", id);
+        service.deleteAfdeling(id);
+    }
 }
