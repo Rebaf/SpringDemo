@@ -1,6 +1,8 @@
 package eu.additude.demo.soap;
 
 import eu.additude.demo.controller.PersoonService;
+import eu.additude.guides.gs_producing_web_service.GetPersonenRequest;
+import eu.additude.guides.gs_producing_web_service.GetPersonenResponse;
 import eu.additude.guides.gs_producing_web_service.GetPersoonRequest;
 import eu.additude.guides.gs_producing_web_service.GetPersoonResponse;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,9 +21,18 @@ public class PersoonSoapEndpoint {
     @PayloadRoot(namespace = NAMESPACE_URI, localPart = "getPersoonRequest")
     @ResponsePayload // Maak er een SOAP bericht van
     public GetPersoonResponse getPersoon(@RequestPayload GetPersoonRequest request) {
-        System.out.println("LOG- SOAP: personen/" + request.getId() + " - Aanroep van onze webserivce voor het opvragen van één persoon.");
+        System.out.println("LOG- personenSoapWS/" + request.getId() + " - Aanroep van onze webserivce voor het opvragen van één persoon.");
         GetPersoonResponse response = new GetPersoonResponse();
         response.setPersoon(service.findPersoonSOAPById(request.getId()));
+        return response;
+    }
+
+    @PayloadRoot(namespace = NAMESPACE_URI, localPart = "getPersonenRequest")
+    @ResponsePayload
+    public GetPersonenResponse getPersoon(@RequestPayload GetPersonenRequest request) {
+        System.out.println("LOG- personenSoapWS/ - Aanroep van onze webserivce voor het opvragen van alle personen.");
+        GetPersonenResponse response = new GetPersonenResponse();
+        response.getPersonen().addAll(service.getAllePersonenSOAP());
         return response;
     }
 }

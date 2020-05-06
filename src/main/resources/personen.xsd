@@ -19,6 +19,18 @@
         </xs:complexType>
     </xs:element>
 
+    <xs:element name="getPersonenRequest">
+        <xs:complexType/>
+    </xs:element>
+
+    <xs:element name="getPersonenResponse">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="personen" type="tns:persoonSoap" maxOccurs="unbounded"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+
     <!--    Gelijk aan PersoonDTO-->
     <xs:complexType name="persoonSoap">
         <xs:sequence>

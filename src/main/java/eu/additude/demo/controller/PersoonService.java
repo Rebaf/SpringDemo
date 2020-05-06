@@ -57,6 +57,13 @@ public class PersoonService {
         return repository.findAll();
     }
 
+    public List<PersoonSoap> getAllePersonenSOAP() {
+        return repository.findAll()
+                .stream()
+                .map(persoon -> PersoonDTO.createPersoonSOAP(persoon))
+                .collect(Collectors.toList());
+    }
+
     // ToDo ?? @NotNull of @NonNull, zijn meerdere varianten. Handig?? Nog even overleggen met Johan
     public List<PersoonDTO> getAllePersonenDTOVanAfdeling(@NotNull Long id) {
         return afdelingService.findAfdelingById(id)
