@@ -1,4 +1,5 @@
 package eu.additude.demo.config;
+
 import org.springframework.boot.web.servlet.ServletRegistrationBean;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.Bean;
@@ -13,7 +14,7 @@ import org.springframework.xml.xsd.XsdSchema;
 
 @EnableWs
 @Configuration
-public class SoapWebServiceConfig  extends WsConfigurerAdapter {
+public class SoapWebServiceConfig extends WsConfigurerAdapter {
     @Bean
     public ServletRegistrationBean messageDispatcherServlet(ApplicationContext context) {
         MessageDispatcherServlet servlet = new MessageDispatcherServlet();
