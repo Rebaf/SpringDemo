@@ -1,0 +1,9 @@
+<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/"
+                  xmlns:gs="http://additude.eu/guides/gs-producing-web-service">
+    <soapenv:Header/>
+    <soapenv:Body>
+        <gs:getPersoonRequest>
+            <gs:id>1</gs:id>
+        </gs:getPersoonRequest>
+    </soapenv:Body>
+</soapenv:Envelope>

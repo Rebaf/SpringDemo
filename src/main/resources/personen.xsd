@@ -1,0 +1,32 @@
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
+           xmlns:tns="http://additude.eu/guides/gs-producing-web-service"
+           targetNamespace="http://additude.eu/guides/gs-producing-web-service"
+           elementFormDefault="qualified">
+
+    <xs:element name="getPersoonRequest">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="id" type="xs:long"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+
+    <xs:element name="getPersoonResponse">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="persoon" type="tns:persoonSoap"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+
+    <!--    Gelijk aan PersoonDTO-->
+    <xs:complexType name="persoonSoap">
+        <xs:sequence>
+            <xs:element name="id" type="xs:long"/>
+            <xs:element name="naam" type="xs:string"/>
+            <xs:element name="telefoonnummer" type="xs:string"/>
+            <xs:element name="afdeling" type="xs:long"/>
+            <xs:element name="afdelingNaam" type="xs:string"/>
+        </xs:sequence>
+    </xs:complexType>
+</xs:schema>

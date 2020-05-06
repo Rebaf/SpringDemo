@@ -5,6 +5,7 @@ import eu.additude.demo.exceptions.ConflictException;
 import eu.additude.demo.exceptions.ResourceNotFoundException;
 import eu.additude.demo.model.Afdeling;
 import eu.additude.demo.model.Persoon;
+import eu.additude.guides.gs_producing_web_service.PersoonSoap;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -41,6 +42,15 @@ public class PersoonService {
             throw new ResourceNotFoundException("Persoon met id " + id + " niet gevonden");
         }
         return new PersoonDTO(persoonOptional.get());
+    }
+
+    // ToDo pas maken na het genereren van de classes door jaxb2-maven-plugin
+    public PersoonSoap findPersoonSOAPById(Long id) {
+        Optional<Persoon> persoonOptional = repository.findById(id);
+        if (!persoonOptional.isPresent()) {
+            throw new ResourceNotFoundException("Persoon met id " + id + " niet gevonden");
+        }
+        return PersoonDTO.createPersoonSOAP(persoonOptional.get());
     }
 
     public List<Persoon> getAllePersonen() {

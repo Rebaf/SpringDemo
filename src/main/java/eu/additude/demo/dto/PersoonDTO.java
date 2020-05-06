@@ -1,6 +1,7 @@
 package eu.additude.demo.dto;
 
 import eu.additude.demo.model.Persoon;
+import eu.additude.guides.gs_producing_web_service.PersoonSoap;
 
 public class PersoonDTO {  //DTO Data Transfer Object
     private Long id;
@@ -19,7 +20,19 @@ public class PersoonDTO {  //DTO Data Transfer Object
         }
     }
 
-    private String maakSamenGesteldeNaam(Persoon persoon) {
+    public static PersoonSoap createPersoonSOAP(Persoon persoon) {
+        PersoonSoap soap = new PersoonSoap();
+        soap.setId(persoon.getId());
+        soap.setNaam(maakSamenGesteldeNaam(persoon));
+        soap.setTelefoonnummer(persoon.getTelefoonnummer());
+        if (persoon.getAfdeling() != null) {
+            soap.setAfdeling(persoon.getAfdeling().getId());
+            soap.setAfdelingNaam(persoon.getAfdeling().getNaam());
+        }
+        return soap;
+    }
+
+    private static String maakSamenGesteldeNaam(Persoon persoon) {
         return (persoon.getVoornaam() + " " + persoon.getTussenvoegsel()).trim() + " " + persoon.getAchternaam();
     }
 
