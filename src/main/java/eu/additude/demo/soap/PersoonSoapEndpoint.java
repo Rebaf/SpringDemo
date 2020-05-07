@@ -27,9 +27,9 @@ public class PersoonSoapEndpoint {
         return response;
     }
 
-    @PayloadRoot(namespace = NAMESPACE_URI, localPart = "getPersonenRequest")
+    @PayloadRoot(namespace = NAMESPACE_URI, localPart = "getPersonenRequest") // Op basis van de getPersonenRequest uit het xml bericht wordt de mapping gedaan.
     @ResponsePayload
-    public GetPersonenResponse getPersoon(@RequestPayload GetPersonenRequest request) {
+    public GetPersonenResponse getPersonen() {  // @RequestPayload GetPersonenRequest request: Geen parameters nodig, want we doen toch niets met het GetPersonenRequest. Deze wordt alleen gebruikt voor de mapping (vanuit het XML bericht)
         System.out.println("LOG- personenSoapWS/ - Aanroep van onze webserivce voor het opvragen van alle personen.");
         GetPersonenResponse response = new GetPersonenResponse();
         response.getPersonen().addAll(service.getAllePersonenSOAP());

@@ -28,7 +28,7 @@ public class SoapWebServiceConfig extends WsConfigurerAdapter {
         return new SimpleXsdSchema(new ClassPathResource("personen.xsd"));
     }
 
-    @Bean(name = "personenSoap")
+    @Bean(name = "personenSoap") // Dit wordt de naam van de wsdl die je naar buiten vrij geeft.
     public DefaultWsdl11Definition defaultWsdl11Definition(XsdSchema personenSchema) {
         DefaultWsdl11Definition definition = new DefaultWsdl11Definition();
         definition.setSchema(personenSchema);

@@ -64,7 +64,7 @@ public class PersoonService {
                 .collect(Collectors.toList());
     }
 
-    // ToDo ?? @NotNull of @NonNull, zijn meerdere varianten. Handig?? Nog even overleggen met Johan
+    // ToDo ?? @NotNull of @NonNull, zijn meerdere varianten. Handig?? Een keer uitproberen. (Unit test misschien)
     public List<PersoonDTO> getAllePersonenDTOVanAfdeling(@NotNull Long id) {
         return afdelingService.findAfdelingById(id)
                 .getPersonen()
