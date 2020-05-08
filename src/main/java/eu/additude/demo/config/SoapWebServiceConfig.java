@@ -1,5 +1,6 @@
 package eu.additude.demo.config;
 
+import eu.additude.demo.soap.PersoonSoapEndpoint;
 import org.springframework.boot.web.servlet.ServletRegistrationBean;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.Bean;
@@ -34,7 +35,7 @@ public class SoapWebServiceConfig extends WsConfigurerAdapter {
         definition.setSchema(personenSchema);
         definition.setLocationUri("/personenSoapWS");
         definition.setPortTypeName("PersonenPort");
-        definition.setTargetNamespace("http://additude.eu/guides/gs-producing-web-service");
+        definition.setTargetNamespace(PersoonSoapEndpoint.NAMESPACE_URI);
         return definition;
     }
 }

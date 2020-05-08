@@ -1,7 +1,6 @@
 package eu.additude.demo.soap;
 
 import eu.additude.demo.controller.PersoonService;
-import eu.additude.guides.gs_producing_web_service.GetPersonenRequest;
 import eu.additude.guides.gs_producing_web_service.GetPersonenResponse;
 import eu.additude.guides.gs_producing_web_service.GetPersoonRequest;
 import eu.additude.guides.gs_producing_web_service.GetPersoonResponse;
@@ -13,7 +12,7 @@ import org.springframework.ws.server.endpoint.annotation.ResponsePayload;
 
 @Endpoint
 public class PersoonSoapEndpoint {
-    private static final String NAMESPACE_URI = "http://additude.eu/guides/gs-producing-web-service";
+    public static final String NAMESPACE_URI = "http://additude.eu/guides/gs-producing-web-service";
 
     @Autowired
     private PersoonService service;

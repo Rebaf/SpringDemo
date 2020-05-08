@@ -3,6 +3,7 @@ package eu.additude.demo.controller;
 import eu.additude.demo.dto.PersoonDTO;
 import eu.additude.demo.exceptions.ConflictException;
 import eu.additude.demo.exceptions.ResourceNotFoundException;
+import eu.additude.demo.exceptions.ResourceNotFoundExceptionSOAP;
 import eu.additude.demo.model.Afdeling;
 import eu.additude.demo.model.Persoon;
 import eu.additude.guides.gs_producing_web_service.PersoonSoap;
@@ -40,6 +41,8 @@ public class PersoonService {
         Optional<Persoon> persoonOptional = repository.findById(id);
         if (!persoonOptional.isPresent()) {
             throw new ResourceNotFoundException("Persoon met id " + id + " niet gevonden");
+            // ToDo Check bij Johan: springframework heeft ook eigen ResourceNotFoundException.
+            //import org.springframework.data.rest.webmvc.ResourceNotFoundException;
         }
         return new PersoonDTO(persoonOptional.get());
     }
@@ -48,7 +51,7 @@ public class PersoonService {
     public PersoonSoap findPersoonSOAPById(Long id) {
         Optional<Persoon> persoonOptional = repository.findById(id);
         if (!persoonOptional.isPresent()) {
-            throw new ResourceNotFoundException("Persoon met id " + id + " niet gevonden");
+            throw new ResourceNotFoundExceptionSOAP("Persoon met id " + id + " niet gevonden");
         }
         return PersoonDTO.createPersoonSOAP(persoonOptional.get());
     }
@@ -60,7 +63,8 @@ public class PersoonService {
     public List<PersoonSoap> getAllePersonenSOAP() {
         return repository.findAll()
                 .stream()
-                .map(persoon -> PersoonDTO.createPersoonSOAP(persoon))
+                .map(PersoonDTO::createPersoonSOAP)
+//                .map(persoon -> PersoonDTO.createPersoonSOAP(persoon))
                 .collect(Collectors.toList());
     }
 
