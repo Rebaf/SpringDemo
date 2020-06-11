@@ -1,5 +1,9 @@
 package eu.additude.demo.model;
 
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import eu.additude.demo.model.validations.Age;
 
 import javax.persistence.*;
@@ -8,7 +12,9 @@ import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
 
 @Entity // javax.persistence
-//@SequenceGenerator(name="seq", initialValue=10)
+//@JsonIdentityInfo(
+//        generator = ObjectIdGenerators.PropertyGenerator.class,
+//        property = "id")
 public class Persoon {
 
     @Id // javax.persistence
@@ -20,7 +26,8 @@ public class Persoon {
     @Pattern(regexp = "^[0-9].[0-9][0-9][0-9].[0-9][0-9][0-9]$", message = "BSN is niet juiste formaat")
     private String bsn;
 
-    @Column(name = "voornaam") // Zonder deze oplossing, zouden we in het insert statement als veld voor_naam moeten gebruiken. // Hoofdletters worden omgezet naar _letter
+    @Column(name = "voornaam")
+    // Zonder deze oplossing, zouden we in het insert statement als veld voor_naam moeten gebruiken. // Hoofdletters worden omgezet naar _letter
     private String voornaam; // In geval van voorNaam zorgt de mapping van de @Column zou dit veld in de db voor_naam zijn.
 
     @NotNull
@@ -31,8 +38,38 @@ public class Persoon {
 
     private String telefoonnummer;
 
+    @ManyToOne
+    @JsonIgnore // wel in database opslaan, niet in JSON
+    private Afdeling afdeling;
+
+    @Transient // niet in database opslaan, wel in JSON
+    @JsonProperty("afdeling") // naam van het originele veld => naam in JSON
+    private Long afdelingId;
+
+//    @Column(name = "afdeling_id") // naam van het veld in de database
+//    private Long afdeling; // naam van het veld in Java/JSON
+//    // of zo, dan is de @Column niet nodig
+//    private Long afdelingId; // met afdelingId(in Java en JSON) wordt deze gekoppeld aan het veld afdeling_id in de db
+
     @Age(message = "De leeftijd moet tussen {min} en {max} liggen", min = 18, max = 35)
     private Integer leeftijd;
+
+    public Persoon() {
+    } // Zonder deze (private???) constructor gaat het mis. Spring/CrudRepository trekt zich dus NIETS van private aan...
+
+    public Persoon(Persoon other) {
+        zetGegevensOver(other);
+    }
+
+    public void zetGegevensOver(Persoon other) {
+        setBsn(other.bsn); // bsn check (en andere validatie methodes v/d gegevens)
+        setVoornaam(other.voornaam);
+        setTussenvoegsel(other.tussenvoegsel);
+        setAchternaam(other.achternaam);
+        setTelefoonnummer(other.telefoonnummer); // verkeerd telefoonnummer etc
+        setLeeftijd(other.leeftijd);
+        setAfdeling(other.afdeling);
+    }
 
     public Integer getLeeftijd() {
         return leeftijd;
@@ -88,5 +125,21 @@ public class Persoon {
 
     public void setTelefoonnummer(String telefoonnummer) {
         this.telefoonnummer = telefoonnummer;
+    }
+
+    public Afdeling getAfdeling() {
+        return afdeling;
+    }
+
+    public void setAfdeling(Afdeling afdeling) {
+        this.afdeling = afdeling;
+    }
+
+    public Long getAfdelingId() {
+        return afdelingId;
+    }
+
+    public void setAfdelingId(Long afdelingId) {
+        this.afdelingId = afdelingId;
     }
 }
